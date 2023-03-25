@@ -15,6 +15,6 @@ class FileUploadSerializer(serializers.Serializer):
     files = serializers.ListField(
         child=serializers.FileField(),
         allow_empty=False,
-        max_length=10
+        max_length=10 # tối đa 10 ảnh 
     )
 # upfile 

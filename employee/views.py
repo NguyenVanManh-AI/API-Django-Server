@@ -88,11 +88,14 @@ from .serializers import FileUploadSerializer
 # upload nhiều file 
 import os
 import shutil
+import json 
 from rest_framework.parsers import MultiPartParser
 
-def handle_uploaded_file(file):
+from unidecode import unidecode # xóa dấu trong python 
+def handle_uploaded_file(file,user_id,user_fullname):
     fs = FileSystemStorage()
-    fs.save(file.name, file)
+    user_fullname = unidecode(user_fullname).replace(" ", "-")
+    fs.save(user_id+'-'+user_fullname+'-'+file.name, file)
     # path = '/avatar/'
     # if not os.path.exists(path):
     #     os.makedirs(path)
@@ -106,8 +109,12 @@ class FileUploadView(APIView):
     def post(self, request, format=None):
         serializer = FileUploadSerializer(data=request.data)
         if serializer.is_valid():
+            user_data = json.loads(request.data['user']) # dưới client là chuyển object thành string 
+            # lên đây chuyển string về lại json 
+            user_id = user_data.get('id')
+            user_fullname = user_data.get('fullname')
             for file in serializer.validated_data['files']:
-                handle_uploaded_file(file)
+                handle_uploaded_file(file,user_id,user_fullname)
             return Response({'status': 'OK'})
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

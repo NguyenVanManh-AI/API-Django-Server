@@ -63,10 +63,15 @@ REST_FRAMEWORK = {
 MEDIA_ROOT = os.path.join(BASE_DIR, 'avatar')
 MEDIA_URL = '/avatar/'
 # upfile
-# khi push code lên github xong deploy thì không thấy folder avatar mà chỉ thấy folder static 
-# nên ta sẽ dùng folder static để lưu ảnh => tạo trong folder static folder avatar  
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'static/avatar')
-# MEDIA_URL = '/static/avatar/'
+# Note : Khi ta tạo folder avatar mà không có ảnh hay file gì trong đó => thì khi push lên github thì nó sẽ không có 
+# folder avatar => dẫn đến khi deploy sẽ không có folder avatar 
+# => ta sẽ thêm file gì đó để khi deploy sẽ có 
+# https://pbl-5.vercel.app/main/account/upfile vào đây để up file 
+# vào đây để xem ảnh : https://pbl5.up.railway.app/avatar/windows.jpg
+# lưu ý các ảnh được upload vào https://pbl5.up.railway.app tất nhiên sẽ không có trong github 
+# nó sẽ có trong bộ nhớ của railway
+# Note2 : Mỗi lần deploy mới thì sẽ thay toàn bộ tất cả trên railway nên trong đó bao gồm có cả ảnh nữa 
+# các ảnh được tải lên https://pbl5.up.railway.app trước đó sẽ không còn nữa
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
