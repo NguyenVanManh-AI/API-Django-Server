@@ -1,6 +1,13 @@
 from django.urls import path, re_path
 from . import views
 
+from django.urls import path
+from .views import FileUploadView
+
+# lấy ảnh ra để xem 
+from django.conf.urls.static import static
+from django.conf import settings
+
 urlpatterns = [
     re_path(
         r'^api/employee/(?P<pk>[0-9]+)$',
@@ -11,8 +18,15 @@ urlpatterns = [
         'api/employee/',
         views.get_post_employee,
         name='get_post_employee'
-    )
-]
+    ),
+    # cũ 
+    # path(
+    #     'api/upload/',
+    #     views.upload,
+    #     name='upload'
+    # ),
+    path('api/upload-file/', FileUploadView.as_view(), name='upload-file'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # lấy ảnh ra để xem
 
 # from django.conf.urls import url
 # from . import views
