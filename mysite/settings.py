@@ -63,7 +63,10 @@ REST_FRAMEWORK = {
 MEDIA_ROOT = os.path.join(BASE_DIR, 'avatar')
 MEDIA_URL = '/avatar/'
 # upfile
-
+# khi push code lên github xong deploy thì không thấy folder avatar mà chỉ thấy folder static 
+# nên ta sẽ dùng folder static để lưu ảnh => tạo trong folder static folder avatar  
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'static/avatar')
+# MEDIA_URL = '/static/avatar/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
