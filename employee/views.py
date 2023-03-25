@@ -92,16 +92,33 @@ import json
 from rest_framework.parsers import MultiPartParser
 
 from unidecode import unidecode # xóa dấu trong python 
+from .models import Images
+
+import random
+import string
+# trong python có một cái rất hay , nghĩa là nếu như upload cùng tên file đã có thì nó tự cộng thêm một chuỗi random để khỏi trùng
+# vấn đề ở đây là ta phải lấy tên để lưu vào db => xử lý mệt vì 
+# cách tốt nhất là chủ động cho nó không thể trùng nhau bằng cách mỗi lần tạo file mới là cộng thêm chuỗi random 10 kí tự 
+
 def handle_uploaded_file(file,user_id,user_fullname):
     fs = FileSystemStorage()
     user_fullname = unidecode(user_fullname).replace(" ", "-")
-    fs.save(user_id+'-'+user_fullname+'-'+file.name, file)
+    # file_name = user_id+'-'+user_fullname+'-'+file.name
+    randomstring = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+    file_name = user_id + '-' + user_fullname + '-' + randomstring + '-' + file.name 
+    fs.save(file_name, file)
     # path = '/avatar/'
     # if not os.path.exists(path):
     #     os.makedirs(path)
     # with open(os.path.join(path, file.name), 'wb+') as destination:
     #     for chunk in file.chunks():
     #         destination.write(chunk)
+
+    # Lưu thông tin file vào bảng Images
+    image = Images()
+    image.id_user = user_id
+    image.image_path = '/avatar/' + file_name
+    image.save()
 
 class FileUploadView(APIView):
     parser_classes = [MultiPartParser]
@@ -120,3 +137,11 @@ class FileUploadView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # upload nhiều file 
+
+
+# get images of user 
+def get_images(request):
+    id_user = request.GET.get('id_user')
+    images = Images.objects.filter(id_user=id_user)
+    data = [{'id': img.id, 'id_user': img.id_user, 'image_path': img.image_path} for img in images]
+    return JsonResponse({'data': data})
