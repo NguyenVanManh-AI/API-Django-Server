@@ -172,7 +172,11 @@ def update_images(request):
         return JsonResponse({'status': 'False'})
 
 
-
+# def all_images(): => như thế này sẽ lỗi 
+def all_images(request):
+    images = Images.objects.filter()
+    data = [{'id': img.id, 'id_user': img.id_user, 'image_path': img.image_path} for img in images]
+    return JsonResponse({'data': data})
 
 # removeimages = request.GET.get('removeimages')
 # data = {
