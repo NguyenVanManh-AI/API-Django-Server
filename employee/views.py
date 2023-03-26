@@ -120,6 +120,8 @@ def handle_uploaded_file(file,user_id,user_fullname):
     image.image_path = '/avatar/' + file_name
     image.save()
 
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CRUD VECTOR 
+
 class FileUploadView(APIView):
     parser_classes = [MultiPartParser]
 
@@ -164,6 +166,8 @@ def update_images(request):
     
             # Xóa dữ liệu trong db 
             image.delete()
+
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CRUD VECTOR 
 
         # Trả về True nếu xóa thành công
         return JsonResponse({'status': 'OK'})

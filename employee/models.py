@@ -20,3 +20,13 @@ class Images(models.Model):
 
     def __repr__(self):
         return 'Image ' + str(self.id) + ' is added.'
+    
+
+# bảng Vectors 
+class Vectors(models.Model):
+    id = models.AutoField(primary_key=True)
+    id_user = models.CharField(max_length=255)
+    vector = models.TextField() # độ dài lớn 
+
+    def __repr__(self):
+        return 'Vector ' + str(self.id) + ' is added.'
