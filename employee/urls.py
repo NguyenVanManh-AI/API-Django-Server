@@ -27,6 +27,7 @@ urlpatterns = [
     # ),
     path('api/upload-file', FileUploadView.as_view(), name='upload-file'), # upload files 
     path('api/images', views.get_images, name='images'), # get images of user , views.get_images là hàm get_images trong file views
+    path('api/update-images', views.update_images, name='update-images'), # update images 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # lấy ảnh ra để xem
 
 # from django.conf.urls import url

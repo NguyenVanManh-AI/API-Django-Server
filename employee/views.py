@@ -145,3 +145,38 @@ def get_images(request):
     images = Images.objects.filter(id_user=id_user)
     data = [{'id': img.id, 'id_user': img.id_user, 'image_path': img.image_path} for img in images]
     return JsonResponse({'data': data})
+
+
+# update images 
+def update_images(request):
+    id_removeimages = request.GET.get('id_removeimages')
+    id_imgRemoves = id_removeimages.split(',')
+    try:
+        for id_img in id_imgRemoves:
+            # lấy ra ảnh có id đó 
+            image = Images.objects.get(id=id_img)
+    
+            # xóa ảnh 
+            image_path = image.image_path # '/avatar/gAo23GXKEKDGaWiQrZyT-Nguyen-Van-Manh-VAK2JZQETN-4k.jpg'
+            image_path = image_path[1:] # nhưng 'avatar/gAo23GXKEKDGaWiQrZyT-Nguyen-Van-Manh-VAK2JZQETN-4k.jpg' mới được 
+            if os.path.exists(image_path):  # kiểm tra xem ảnh có tồn tại không
+                os.remove(image_path)  # xóa ảnh
+    
+            # Xóa dữ liệu trong db 
+            image.delete()
+
+        # Trả về True nếu xóa thành công
+        return JsonResponse({'status': 'OK'})
+    except:
+        # Trả về False nếu xóa không thành công
+        return JsonResponse({'status': 'False'})
+
+
+
+
+# removeimages = request.GET.get('removeimages')
+# data = {
+#     'name': request.data.get('name'),
+#     'age': int(request.data.get('age'))
+# }
+# => ta chú ý là get và GET là khác nhau , GET là phương thức , get là lấy 
