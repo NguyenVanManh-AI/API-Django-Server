@@ -94,7 +94,6 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:8080',
     'http://127.0.0.1:9000',
     'https://pbl-5.vercel.app',
-    'https://pbl5.vercel.app'
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
