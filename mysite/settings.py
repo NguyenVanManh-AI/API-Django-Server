@@ -96,6 +96,16 @@ CORS_ORIGIN_WHITELIST = [
     'https://pbl-5.vercel.app',
     'https://pbl5.vercel.app'
 ]
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 
 # ROOT_URLCONF = 'myemployee.urls'
 ROOT_URLCONF = 'mysite.urls'
